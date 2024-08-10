@@ -64,30 +64,24 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
-
-//        if(taskOptional.isEmpty()){
-//            return ResponseEntity.status(404).body("Task not found");
-//        }
-//        var taskModel = new TaskModel(taskDTO);
-//        taskModel.setId(id);
-//        taskService.updateTask(taskModel);
-//        return ResponseEntity.status(200).body(taskModel);
-
-
     //UPDATE STATUS
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateTaskStatus (@PathVariable("id") UUID id, @RequestBody @Valid StatusDTO statusDTO){
-        String message = taskService.updateStatus(id, statusDTO.status);
-        return ResponseEntity.status(200).body(message);
+        try {
+            taskService.updateStatus(id, statusDTO);
+            return ResponseEntity.status(HttpStatus.OK).body("Task status updated");
+        } catch (TaskNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
     //REMOVE
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTask (@PathVariable("id") UUID id) {
-        //Optional<TaskModel> task = (Optional<TaskModel>) taskService.getTask(id);
-//        if(task.isEmpty()){
-//            return ResponseEntity.status(404).body("Task not found");
-//        }
-//        taskService.deleteTask(id);
-        return ResponseEntity.status(200).body("Task deleted");
+        try {
+            taskService.deleteTask(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Task deleted");
+        } catch (TaskNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
