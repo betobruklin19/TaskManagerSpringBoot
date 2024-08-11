@@ -1,6 +1,6 @@
 package com.study.task_manager.models;
 
-import com.study.task_manager.DTOs.TaskDTO;
+import com.study.task_manager.DTOs.SaveTaskDTO;
 import com.study.task_manager.enums.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -37,7 +37,7 @@ public class TaskModel implements Serializable {
     public TaskModel() {
     }
 
-    public TaskModel(TaskDTO taskDTO) {
+    public TaskModel(SaveTaskDTO taskDTO) {
         this.name = taskDTO.name;
         this.description = taskDTO.description;
         this.dueDate = taskDTO.dueDate;
@@ -45,7 +45,6 @@ public class TaskModel implements Serializable {
             setStatus(taskDTO.status);
         }
     }
-
 
     public UUID getId() {
         return id;
