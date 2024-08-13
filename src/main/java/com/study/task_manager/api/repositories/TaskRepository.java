@@ -1,6 +1,6 @@
-package com.study.task_manager.repositories;
+package com.study.task_manager.api.repositories;
 
-import com.study.task_manager.models.TaskModel;
+import com.study.task_manager.api.models.TaskModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

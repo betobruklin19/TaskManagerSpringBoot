@@ -1,7 +1,7 @@
-package com.study.task_manager.DTOs;
+package com.study.task_manager.api.DTOs;
 
-import com.study.task_manager.enums.Status;
-import com.study.task_manager.models.TaskModel;
+import com.study.task_manager.api.enums.Status;
+import com.study.task_manager.api.models.TaskModel;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

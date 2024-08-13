@@ -1,7 +1,7 @@
-package com.study.task_manager.models;
+package com.study.task_manager.api.models;
 
-import com.study.task_manager.DTOs.SaveTaskDTO;
-import com.study.task_manager.enums.Status;
+import com.study.task_manager.api.DTOs.SaveTaskDTO;
+import com.study.task_manager.api.enums.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 

@@ -1,4 +1,4 @@
-package com.study.task_manager.errors;
+package com.study.task_manager.api.errors;
 
 import java.util.List;
 

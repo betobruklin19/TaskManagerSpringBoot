@@ -1,20 +1,20 @@
-package com.study.task_manager.controllers;
+package com.study.task_manager.api.controllers;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.study.task_manager.DTOs.TaskDTO;
-import com.study.task_manager.DTOs.UpdateStatusDTO;
-import com.study.task_manager.errors.TaskNotFoundException;
-import com.study.task_manager.services.TaskService;
+import com.study.task_manager.api.DTOs.SaveTaskDTO;
+import com.study.task_manager.api.DTOs.TaskDTO;
+import com.study.task_manager.api.DTOs.UpdateStatusDTO;
+import com.study.task_manager.api.errors.TaskNotFoundException;
+import com.study.task_manager.api.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.study.task_manager.DTOs.SaveTaskDTO;
 import jakarta.validation.Valid;
 
-@RequestMapping ("/tasks")
+@RequestMapping ("api/tasks")
 @RestController
 @CrossOrigin(origins = "*")
 public class TaskController {

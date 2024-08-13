@@ -1,6 +1,6 @@
-package com.study.task_manager.DTOs;
+package com.study.task_manager.api.DTOs;
 
-import com.study.task_manager.enums.Status;
+import com.study.task_manager.api.enums.Status;
 import jakarta.validation.constraints.NotNull;
 
 public class UpdateStatusDTO {
