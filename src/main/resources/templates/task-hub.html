@@ -19,17 +19,15 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">ID</th>
             <th scope="col">Nome</th>
             <th scope="col">Descrição</th>
             <th scope="col">Status</th>
             <th scope="col">Data de execução</th>
-            <th scope="col">Ações</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="task : ${tasks}">
-            <td data-th-text="${task.id}"></td>
             <td data-th-text="${task.name}"></td>
             <td data-th-text="${task.description}"></td>
             <td data-th-text="${task.status}"></td>

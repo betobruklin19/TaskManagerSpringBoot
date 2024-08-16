@@ -11,6 +11,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,7 +52,6 @@ public class TaskHubController {
 
     @PostMapping("/new-task")
     public String createTask(TaskModel taskModel) {
-        System.out.println(taskModel);
         RestTemplate restTemplate = new RestTemplate();
         String url = apiConfig.getBaseUrl() + "/api/tasks";
         Map<String, Object> body = new HashMap<>();
@@ -62,6 +62,40 @@ public class TaskHubController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         restTemplate.postForEntity(url, request, String.class);
+        return "redirect:/task-hub";
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") UUID id) {
+        ModelAndView modelAndView = new ModelAndView("edit-task");
+        RestTemplate restTemplate = new RestTemplate();
+        String url = apiConfig.getBaseUrl() + "/api/tasks/" + id;
+        ResponseEntity<TaskDTO> responseEntity = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<TaskDTO>() {}
+        );
+        TaskDTO responseData = responseEntity.getBody();
+        var taskModel = new TaskModel(responseData.name, responseData.description, responseData.dueDate);
+        taskModel.setId(responseData.getId());
+        taskModel.setStatus(responseData.status);
+        modelAndView.addObject("task", taskModel);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-task")
+    public String updateTask(TaskModel taskModel) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = apiConfig.getBaseUrl() + "/api/tasks/" + taskModel.getId();
+        Map<String, Object> body = new HashMap<>();
+        body.put("name", taskModel.getName());
+        body.put("description", taskModel.getDescription());
+        body.put("dueDate", taskModel.getDueDate().toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+        restTemplate.put(url, request, String.class);
         return "redirect:/task-hub";
     }
 
