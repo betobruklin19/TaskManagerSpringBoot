@@ -31,8 +31,9 @@
             <td data-th-text="${task.name}"></td>
             <td data-th-text="${task.description}"></td>
             <td>
-                <input type="checkbox" th:id="'status-' + ${task.id}" class="check-box" name="check-status" th:data-id="${task.id}" th:checked="${task.status == 'DONE'}" />
-                <p th:text="'Status: ' + ${task.status}"></p>
+                <input type="checkbox" th:id="'status-' + ${task.id}" class="check-box" name="taskCheckbox"
+                       th:data-id="${task.id}" th:checked="${task.status == 'DONE' ? 'checked' : null}" />
+                <label th:for="'status-' + ${task.id}">Status: <span th:text="${task.status}"></span></label>
             </td>
             <td data-th-text="${{task.dueDate}}"></td>
             <td>
