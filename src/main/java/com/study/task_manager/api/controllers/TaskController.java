@@ -61,7 +61,7 @@ public class TaskController {
         }
     }
     //UPDATE STATUS
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}/status")
     public ResponseEntity<String> updateTaskStatus (@PathVariable("id") UUID id, @RequestBody @Valid UpdateStatusDTO updateStatusDTO){
         try {
             taskService.updateStatus(id, updateStatusDTO);

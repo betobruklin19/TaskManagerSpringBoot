@@ -1,9 +1,7 @@
 package com.study.task_manager.app;
 
 import com.study.task_manager.api.enums.Status;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TaskModel {
@@ -14,12 +12,11 @@ public class TaskModel {
 
     private String description;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime dueDate;
+    private String dueDate;
 
     private Status status;
 
-    public TaskModel(String name, String description, LocalDateTime dueDate) {
+    public TaskModel(String name, String description, String dueDate) {
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
@@ -60,11 +57,11 @@ public class TaskModel {
         this.description = description;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 }

@@ -1,6 +1,7 @@
 package com.study.task_manager.app;
 
 import com.study.task_manager.api.DTOs.TaskDTO;
+import com.study.task_manager.api.DTOs.UpdateStatusDTO;
 import com.study.task_manager.api.configs.ApiConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,10 +9,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,11 +55,24 @@ public class TaskHubController {
         Map<String, Object> body = new HashMap<>();
         body.put("name", taskModel.getName());
         body.put("description", taskModel.getDescription());
-        body.put("dueDate", taskModel.getDueDate().toString());
+        body.put("dueDate", taskModel.getDueDate());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         restTemplate.postForEntity(url, request, String.class);
+        return "redirect:/task-hub";
+    }
+
+    @PostMapping("/update-status")
+    public String updateStatus(@RequestBody StatusModel statusModel) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = apiConfig.getBaseUrl() + "/api/tasks/" + statusModel.id + "/status";
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", statusModel.status);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+        restTemplate.put(url, request, String.class);
         return "redirect:/task-hub";
     }
 
@@ -77,7 +88,7 @@ public class TaskHubController {
             new ParameterizedTypeReference<TaskDTO>() {}
         );
         TaskDTO responseData = responseEntity.getBody();
-        var taskModel = new TaskModel(responseData.name, responseData.description, responseData.dueDate);
+        var taskModel = new TaskModel(responseData.name, responseData.description, responseData.dueDate.toString());
         taskModel.setId(responseData.getId());
         taskModel.setStatus(responseData.status);
         modelAndView.addObject("task", taskModel);
@@ -91,7 +102,7 @@ public class TaskHubController {
         Map<String, Object> body = new HashMap<>();
         body.put("name", taskModel.getName());
         body.put("description", taskModel.getDescription());
-        body.put("dueDate", taskModel.getDueDate().toString());
+        body.put("dueDate", taskModel.getDueDate());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
